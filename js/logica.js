@@ -1,20 +1,21 @@
-// js/logica.js · Funciones PURAS: reciben datos y devuelven datos. Aquí NO aparece document.
+// js/logica.js · Lógica pura: recibe datos y devuelve datos. Aquí NO aparece document.
 
-// R4 · Devuelve los episodios cuyo name contiene `texto` (sin importar mayúsculas ni espacios
-// al inicio o al final) y cuyo código episode (S01E01…) empieza por `temporada`.
-// temporada === '' significa «todas las temporadas».
+// R4 · Filtra por texto (en el nombre) y por temporada (inicio del código)
 export const filtrarEpisodios = (lista, { texto, temporada }) => {
-  // TODO: usa filter
+  const busqueda = texto.trim().toLowerCase();
+
+  return lista.filter((episodio) =>
+    episodio.name.toLowerCase().includes(busqueda) &&
+    episodio.episode.startsWith(temporada)
+  );
 };
 
-// R5 · Suma la cantidad de personajes (characters.length) de todos los episodios de la lista.
-// Usa reduce.
-export const contarPersonajes = (lista) => {
-  // TODO
-};
+// R5 · Suma la cantidad de personajes de todos los episodios
+export const contarPersonajes = (lista) =>
+  lista.reduce((total, episodio) => total + episodio.characters.length, 0);
 
-// R6 · Si id está en ids, devuelve un array NUEVO sin él; si no está, un array NUEVO con él.
-// No modifiques el array que recibes.
-export const alternarId = (ids, id) => {
-  // TODO
-};
+// R6 · Agrega o quita un id SIN modificar el array original
+export const alternarId = (ids, id) =>
+  ids.includes(id)
+    ? ids.filter((x) => x !== id)
+    : [...ids, id];
