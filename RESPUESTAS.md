@@ -27,15 +27,15 @@ console.log('5');
 
 **(a)** Los cinco números en el orden en que salen en la consola. (2 pts)
 
-Respuesta:
+Respuesta: 1,3,5,2,4
 
 **(b)** Por qué el `3` sale **antes** que el `5`, si `cargar` es una función `async`. (2 pts)
 
-Respuesta:
+Respuesta:porque encuentra el awaitAl llamar cargar corre console.log('3') enseguida
 
 **(c)** Por qué el `5` no espera a que termine el `fetch`, y por qué el `2` y el `4` salen al final. (1 pt)
 
-Respuesta:
+Respuesta:El await pausa solo a cargar, así que el 5 no espera. El 2 y el 4 salen al final porque son tareas pendientes que corren cuando termina el código normal.
 
 ## P2 · Un 404 que no llega al catch (5 puntos)
 
@@ -55,15 +55,15 @@ try {
 
 **(a)** Qué imprime la consola, exactamente. (1 pt)
 
-Respuesta:
+Respuesta:Episodio: undefined
 
 **(b)** Por qué **no** entra al `catch`, aunque el episodio no existe. Pista: piensa en la diferencia entre «el servidor respondió con un 404» y «no hubo respuesta» (por ejemplo, sin internet). (2 pts)
 
-Respuesta:
+Respuesta:fetch solo falla si no logra hablar con el servidor. Un 404 sí es una respuesta, así que no hay error y no entra al catch.
 
 **(c)** La línea que falta para que sí entre al `catch`: escríbela e indica en qué parte del código va. Luego escribe qué imprimiría la consola con esa línea. (2 pts)
 
-Respuesta:
+Respuesta:Después del fetch y antes del json():
 
 ## P3 · LocalStorage sin JSON (5 puntos)
 
@@ -80,24 +80,23 @@ const recuperado = JSON.parse(leido);  // (c)
 
 **(a)** Qué imprime la línea marcada (a): el valor y su tipo. (1 pt)
 
-Respuesta:
+Respuesta: 1,5,8 string: localStorage solo guarda texto
 
 **(b)** Qué imprime la línea marcada (b), y por qué da ese número. (1 pt)
 
-Respuesta:
+Respuesta:5: son los cinco caracteres del texto "1,5,8".
 
 **(c)** Qué pasa en la línea marcada (c): ¿funciona o sale un error? Si sale un error, cuál y por qué. (1 pt)
 
-Respuesta:
+Respuesta:Sale un error (SyntaxError), porque 1,5,8 no es json valido.
 
 **(d)** La segunda línea corregida, para que `recuperado` vuelva a ser el array `[1, 5, 8]`. (1 pt)
 
-Respuesta:
+Respuesta:localStorage.setItem('vistos', JSON.stringify(vistos));
 
 **(e)** Por qué en tu `leerVistos` el `JSON.parse` va dentro de un `try/catch`: qué podría pasarle a la app si no estuviera. (1 pt)
 
-Respuesta:
-
+Respuesta:Si el texto guardado está dañado, JSON.parse lanzaría un error y la app no arrancaría. El try/catch evita eso.
 ## P4 · Botones que dejan de funcionar (5 puntos)
 
 **Lo viste en:** la delegación en la grilla del Explorador (semana 7, paso 04). Está explicada en el README, en R6: «¿Qué es la delegación?».
@@ -117,12 +116,17 @@ document.querySelectorAll('[data-id]').forEach((boton) => {
 
 **(a)** Qué les pasó a los botones. Pista: fíjate en qué hace `render()` con el contenido de `#lista` cada vez que se llama, y en cuántas veces se ejecuta el `forEach`. (2 pts)
 
-Respuesta:
+Respuesta:render() borra los botones y crea nuevos, y el forEach solo puso listeners a los viejos. Los nuevos no tienen ninguno.
 
 **(b)** El código reescrito con **delegación**: un solo listener en `#lista` que funcione con cualquier botón, aunque `render()` lo haya creado después. Se revisan tres cosas, 1 punto cada una: que el listener esté en `#lista` y no en los botones; que use `closest('[data-id]')` (o algo equivalente) para saber qué botón se presionó; y que no haga nada si el clic no fue en un botón. (3 pts)
 
-Respuesta:
+Respuesta:lista.addEventListener('click', (evento) => {
+  const boton = evento.target.closest('[data-id]');
+  if (!boton) return;
 
-```js
+  vistos = alternarId(vistos, Number(boton.dataset.id));
+  guardarVistos(vistos);
+  render();
+});
 
-```
+
