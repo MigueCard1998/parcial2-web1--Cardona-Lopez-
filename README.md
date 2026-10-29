@@ -1,5 +1,6 @@
+# Parcial 2 · Guía de episodios de Rick and Morty
 
-
+**Programación para entornos web 1 · 2026-2 · Trabajo práctico individual · Entrega: miércoles 28 de octubre de 2026, antes de las 6:00 p. m. · 20 % de la nota**
 
 Vas a construir una guía de episodios que consume `https://rickandmortyapi.com/api/episode`, un recurso de la API que **no** usamos en clase. Abre esa URL en el navegador antes de escribir código: la respuesta es un objeto con `info` y `results`, y cada episodio de `results` tiene `id`, `name`, `air_date`, `episode` (el código, por ejemplo `S01E01`) y `characters` (un array de URLs).
 
