@@ -1,13 +1,17 @@
-// js/vistos.js · Persistencia en LocalStorage. Aquí NO aparece document.
+// js/vistos.js · Persistencia en LocalStorage
 const CLAVE = 'parcial2-vistos';
 
-// R6 · Devuelve el array de ids guardado en LocalStorage.
-// Si no hay nada guardado, o lo guardado no es JSON válido, devuelve [] (sin romper la app).
-export const leerVistos = () => {
-  // TODO
+// R6 · Guarda el array como texto JSON, por ejemplo "[1,12]"
+export const guardarVistos = (ids) => {
+  localStorage.setItem(CLAVE, JSON.stringify(ids));
 };
 
-// R6 · Guarda el array de ids en LocalStorage como texto JSON.
-export const guardarVistos = (ids) => {
-  // TODO
+// R6 · Lee y convierte; si no hay nada o está dañado, devuelve []
+export const leerVistos = () => {
+  try {
+    const texto = localStorage.getItem(CLAVE);
+    return texto ? JSON.parse(texto) : [];
+  } catch {
+    return [];
+  }
 };
